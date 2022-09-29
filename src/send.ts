@@ -9,8 +9,9 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 const main = async () => {
   try {
+
     const nonce = await web3.eth.getTransactionCount(WALLET_ADDRESS!)
-    console.log('NOnce', nonce)
+    console.log('Nonce', nonce)
 
     const receiverAddress = '0x266fedED59399AFC982EEa44724fCa7Ba31C054f'
 
@@ -22,7 +23,6 @@ const main = async () => {
       nonce: nonce,
     }
 
-    //TODO: add the signature to the transaction object
 
     const signedTransaction = await web3.eth.accounts.signTransaction(
       transaction,
@@ -31,10 +31,10 @@ const main = async () => {
 
     const sendSignedTransaction = await web3.eth.sendSignedTransaction(
       signedTransaction.rawTransaction!,
-      function (err: any, hash: any) {
+      function (err: any, hash: string) {
         if (!err) {
           console.log(
-            `🎉 The hash of your transaction is: , ${hash}, \n Check Alchemy's Mempool to view the status of your transaction!🔥🔥🔥`,
+            `🎉 The hash of your transaction is: , ${hash}, \n Check goerli scan to view the status of your transaction!🔥🔥🔥`,
           )
         } else {
           console.log(
@@ -46,6 +46,7 @@ const main = async () => {
     )
 
     console.log({ sendSignedTransaction })
+
   } catch (error) {
     console.log('Failed sending  transaction', error)
   }
