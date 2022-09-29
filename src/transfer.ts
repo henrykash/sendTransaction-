@@ -23,6 +23,6 @@ const sendTx = async (address: string, amount: BigNumber) => {
 }
 let receiverAddress = "0x266fedED59399AFC982EEa44724fCa7Ba31C054f"
 let ETHER_TO_SEND = 0.001
-
+console.log(`Sending ${utils.parseEther(ETHER_TO_SEND.toString())}`, `To ${receiverAddress}`)
 
 sendTx(receiverAddress, utils.parseEther(ETHER_TO_SEND.toString()))
