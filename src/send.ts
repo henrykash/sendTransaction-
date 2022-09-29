@@ -1,18 +1,24 @@
 require('dotenv').config()
-const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
-const web3 = createAlchemyWeb3('')
-const walletAddress = 'input your private key'
-const PRIVATE_KEY = 'input your wallet private '
+import { createAlchemyWeb3 } from '@alch/alchemy-web3'
+
+const web3 = createAlchemyWeb3(
+  'wss://eth-goerli.g.alchemy.com/v2/0aHuSlzbd5Vvxqr_oCEYZdSyhn9PhiRI',
+)
+const WALLET_ADDRESS = process.env.PUBLIC_KEY;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 const main = async () => {
   try {
-    const nonce = await web3.eth.getTransactionCount(walletAddress)
+    const nonce = await web3.eth.getTransactionCount(WALLET_ADDRESS!)
+    console.log('NOnce', nonce)
+
+    const receiverAddress = '0x266fedED59399AFC982EEa44724fCa7Ba31C054f'
 
     /* creating the transaction object */
     const transaction = {
-      to: '',
-      value: 0.001 * 10 ** 18,
-      gas: 300000,
+      to: receiverAddress,
+      value: 0.001 * 1e18,
+      gasLimit: 300000,
       nonce: nonce,
     }
 
@@ -20,12 +26,12 @@ const main = async () => {
 
     const signedTransaction = await web3.eth.accounts.signTransaction(
       transaction,
-      PRIVATE_KEY,
+      PRIVATE_KEY!,
     )
 
     const sendSignedTransaction = await web3.eth.sendSignedTransaction(
-      signedTransaction.rawTransaction,
-      function (err, hash) {
+      signedTransaction.rawTransaction!,
+      function (err: any, hash: any) {
         if (!err) {
           console.log(
             `🎉 The hash of your transaction is: , ${hash}, \n Check Alchemy's Mempool to view the status of your transaction!🔥🔥🔥`,
