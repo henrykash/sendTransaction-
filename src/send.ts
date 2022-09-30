@@ -11,10 +11,16 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 const main = async () => {
   try {
+
     /*get the nonce using web3 getTransactionCount function for the wallet address
     nonce is the number of transactions sent from the wallet address*/
     const nonce = await web3.eth.getTransactionCount(WALLET_ADDRESS!);
     console.log("NOnce", nonce);
+
+
+    const nonce = await web3.eth.getTransactionCount(WALLET_ADDRESS!)
+    console.log('Nonce', nonce)
+
 
     //the wallet address to send the transaction to
     const receiverAddress = "0x266fedED59399AFC982EEa44724fCa7Ba31C054f";
@@ -24,10 +30,10 @@ const main = async () => {
       to: receiverAddress,
       value: 0.001 * 1e18,
       gasLimit: 300000,
-      nonce: nonce,
-    };
-
+      nonce: nonce
+      }
     //Signing the traonsaction with the private key
+
 
     const signedTransaction = await web3.eth.accounts.signTransaction(
       transaction,
@@ -37,11 +43,13 @@ const main = async () => {
     //sending the transaction to the blockchain
     const sendSignedTransaction = await web3.eth.sendSignedTransaction(
       signedTransaction.rawTransaction!,
-      function (err: any, hash: any) {
+      function (err: any, hash: string) {
         if (!err) {
           console.log(
+
             `🎉 The hash of your transaction is: , ${hash}, \n Check Alchemy's Mempool to view the status of your transaction!🔥🔥🔥`
           );
+
         } else {
           console.log(
             "❗Something went wrong while submitting your transaction:",
@@ -51,7 +59,10 @@ const main = async () => {
       }
     );
 
-    console.log({ sendSignedTransaction });
+
+ 
+    console.log({ sendSignedTransaction })
+
   } catch (error) {
     console.log("Failed sending  transaction", error);
   }
