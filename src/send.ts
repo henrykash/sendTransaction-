@@ -18,10 +18,6 @@ const main = async () => {
     console.log("NOnce", nonce);
 
 
-    const nonce = await web3.eth.getTransactionCount(WALLET_ADDRESS!)
-    console.log('Nonce', nonce)
-
-
     //the wallet address to send the transaction to
     const receiverAddress = "0x266fedED59399AFC982EEa44724fCa7Ba31C054f";
 
@@ -31,7 +27,7 @@ const main = async () => {
       value: 0.001 * 1e18,
       gasLimit: 300000,
       nonce: nonce
-      }
+    }
     //Signing the traonsaction with the private key
 
 
@@ -60,7 +56,7 @@ const main = async () => {
     );
 
 
- 
+
     console.log({ sendSignedTransaction })
 
   } catch (error) {
