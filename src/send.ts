@@ -3,11 +3,13 @@ import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 //web3 instance connected to the Alchemy provider
 const web3 = createAlchemyWeb3(
-  "wss://eth-goerli.g.alchemy.com/v2/0aHuSlzbd5Vvxqr_oCEYZdSyhn9PhiRI"
+  process.env.WSS_URL!
 );
 //accessing the wallet address & private key from the .env file
 const WALLET_ADDRESS = process.env.PUBLIC_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
+
 
 const main = async () => {
   try {
@@ -18,8 +20,9 @@ const main = async () => {
     console.log("NOnce", nonce);
 
 
+
     //the wallet address to send the transaction to
-    const receiverAddress = "0x266fedED59399AFC982EEa44724fCa7Ba31C054f";
+    const receiverAddress = "0xd18F26ddB0F2e726A895Db41B9EE693c6EaC3d57";
 
     /* creating the transaction object */
     const transaction = {
@@ -29,7 +32,6 @@ const main = async () => {
       nonce: nonce
     }
     //Signing the traonsaction with the private key
-
 
     const signedTransaction = await web3.eth.accounts.signTransaction(
       transaction,

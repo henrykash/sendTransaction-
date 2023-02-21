@@ -28,11 +28,20 @@ const sendTx = async (address: string, amount: BigNumber) => {
 
 };
 
-//the person to receive the amount
-let receiverAddress = "0x266fedED59399AFC982EEa44724fCa7Ba31C054f"
-let ETHER_TO_SEND = 0.001
-console.log(`Sending ${utils.parseEther(ETHER_TO_SEND.toString())}`, `To ${receiverAddress}`)
+
+const main = async () => {
 
 
-//calling the sendTx function
-sendTx(receiverAddress, utils.parseEther(ETHER_TO_SEND.toString()));
+  //the person to receive the amount
+  let receiverAddress = "0xd18F26ddB0F2e726A895Db41B9EE693c6EaC3d57"
+  let ETHER_TO_SEND = 0.001
+  console.log(`Sending ${utils.parseEther(ETHER_TO_SEND.toString())}`, `To ${receiverAddress}`)
+  //calling the sendTx function
+  const tx = await sendTx(receiverAddress, utils.parseEther(ETHER_TO_SEND.toString()));
+
+  console.log("Transaction Hash", tx)
+
+}
+
+main()
+
